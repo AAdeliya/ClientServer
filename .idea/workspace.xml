@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c86af53d-af7d-46bd-893f-7ff156027c33" name="Changes" comment="Java Socket Programming Client Server Messenger">
+    <list default="true" id="c86af53d-af7d-46bd-893f-7ff156027c33" name="Changes" comment="added API into client, server code&#10;tested api call, fetched data">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/RestServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +22,20 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AAdeliya"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="d436e18b-6db6-4cc9-af23-70d53ec242ad" />
+        <option name="url" value="https://github.com/AAdeliya/ClientServer.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -64,11 +78,20 @@
       <option name="project" value="LOCAL" />
       <updated>1732424338808</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added API into client, server code&#10;tested api call, fetched data">
+      <option name="closed" value="true" />
+      <created>1732571414374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732571414374</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Java Socket Programming Client Server Messenger" />
-    <option name="LAST_COMMIT_MESSAGE" value="Java Socket Programming Client Server Messenger" />
+    <MESSAGE value="added API into client, server code&#10;tested api call, fetched data" />
+    <option name="LAST_COMMIT_MESSAGE" value="added API into client, server code&#10;tested api call, fetched data" />
   </component>
 </project>
