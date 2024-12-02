@@ -1,34 +1,86 @@
 package org.example;
-import static spark.Spark.*;
+
+import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.URL;
+
 public class RestServer {
+
     public static void main(String[] args) {
-        // Define the port for the REST API server
-        port(8080);
+        try {
+            // Create an HTTP server that listens on port 8080
+            HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        // API Endpoint to process client requests
-        get("/api/data", (req, res) -> {
-            res.type("application/json");
+            // Define a context (route) for the API
+            server.createContext("/api/data", new MyHandler());
 
-            // Fetch input from client query parameter
-            String clientQuery = req.queryParams("query");
-            if (clientQuery == null || clientQuery.isEmpty()) {
-                return "{\"error\": \"Missing 'query' parameter\"}";
+            // Start the server
+            server.setExecutor(null); // Default executor
+            server.start();
+            System.out.println("Server is running on http://localhost:8080/api/data");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Define the handler for processing HTTP requests
+    static class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) {
+            try {
+                // Only allow GET requests
+                if ("GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                    // Parse query parameters
+                    String query = exchange.getRequestURI().getQuery();
+                    String clientQuery = null;
+                    if (query != null && query.startsWith("query=")) {
+                        clientQuery = query.substring("query=".length());
+                    }
+
+                    if (clientQuery == null || clientQuery.isEmpty()) {
+                        sendResponse(exchange, 400, "{\"error\": \"Missing 'query' parameter\"}");
+                        return;
+                    }
+
+                    // Call an external API
+                    String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
+                    String apiResponse = fetchFromApi(apiUrl);
+
+                    // Build the JSON response
+                    String jsonResponse = String.format("{\"clientInput\": \"%s\", \"apiResponse\": \"%s\"}", clientQuery, apiResponse);
+                    sendResponse(exchange, 200, jsonResponse);
+
+                } else {
+                    // Return 405 Method Not Allowed for non-GET requests
+                    sendResponse(exchange, 405, "{\"error\": \"Method not allowed\"}");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                sendResponse(exchange, 500, "{\"error\": \"Internal server error\"}");
             }
+        }
+    }
 
-            // External API call (example: JSONPlaceholder)
-            String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
-            String apiResponse = fetchFromApi(apiUrl);
-
-            // Return the response as JSON
-            return String.format("{\"clientInput\": \"%s\", \"apiResponse\": \"%s\"}", clientQuery, apiResponse);
-        });
-
-        System.out.println("RESTful API server is running on port 8080...");
+    // Method to send an HTTP response
+    private static void sendResponse(HttpExchange exchange, int statusCode, String response) {
+        try {
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(statusCode, response.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to fetch data from an external API

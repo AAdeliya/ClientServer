@@ -1,0 +1,6 @@
+Javalin is a lightweight, easy-to-use web framework for Java and Kotlin.
+It is designed for building REST APIs, web applications, and microservices with minimal setup and complexity.
+Javalin focuses on simplicity and modern features, making it an excellent choice for developers who
+want a quick and intuitive way to create web applications and RESTful
+APIs without the heavy configuration or boilerplate required by larger frameworks like Spring.
+
